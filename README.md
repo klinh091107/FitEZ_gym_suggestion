@@ -71,7 +71,8 @@ FitEZ/
 - **All Exercise:** browse and filter by muscle group and level.
 - **Quick Routines:** three short routines sourced from the dataset.
 - **Progression:** BFS path finder works without a saved profile (login is still required).
-- **Your plan:** main exercises and optional Hip Mobility within the session time, plus separate warm-up and cool-down suggestions.
+- **Exercise time:** muscle training counts 3 sets (1 min each) with 1 min rest between sets, 5 min in total. Suggestions also count 2 min rest between exercises. Quick Routines have no rest.
+- **Your plan:** main exercises and optional Hip Mobility within the session time, plus separate warm-up (3 moves, most trained muscle groups first) and cool-down suggestions.
 - **Accounts:** register, log in with email or username, and log out. Every page and API requires login.
 - Each user's profile, preferences and latest plan are stored in the database and reloaded at login. Saving a changed profile clears the old plan.
 

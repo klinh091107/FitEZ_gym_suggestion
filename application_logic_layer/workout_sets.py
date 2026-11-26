@@ -5,19 +5,29 @@ WORKOUT_SET_DEFINITIONS = [
         "id": "stretch-reset",
         "title": "10-Minute Stretch Reset",
         "tag": "FLEXIBILITY",
-        "description": "A gentle seated and floor-based cool-down for your back and posterior chain.",
+        "description": "Gentle floor stretches and yoga poses (Cat-Cow, Seated Forward Fold, Child's Pose) for your back, hamstrings and hips.",
         "level": "Beginner",
         "equipment": "Body only",
-        "exercise_names": ["Spinal Stretch", "Seated Forward Fold", "Slow Walk Recovery"]
+        "exercise_names": ["Cat-Cow", "Seated Forward Fold", "Child's Pose"],
+        # Finish with a longer rest pose so the set totals exactly 10 minutes.
+        "durations": {"Child's Pose": 4}
     },
     {
         "id": "office-break",
         "title": "10-Minute Office Break",
         "tag": "DESK-FRIENDLY",
-        "description": "A short movement break: activate your calves, then walk easily to reset after sitting.",
+        "description": "A short desk break: stretch your neck, shoulders, chest and torso, then walk easily to reset after sitting.",
         "level": "Beginner",
-        "equipment": "Body only · wall for balance",
-        "exercise_names": ["Bodyweight Calf Raise", "Slow Walk Recovery"]
+        "equipment": "Body only",
+        "exercise_names": [
+            "Side Neck Stretch", "Overhead Stretch", "Clasped Hands Chest Opener",
+            "Shoulder Stretch", "Slow Walk Recovery"
+        ],
+        # Two minutes for each movement, so the set totals exactly 10 minutes.
+        "durations": {
+            "Side Neck Stretch": 2, "Overhead Stretch": 2, "Clasped Hands Chest Opener": 2,
+            "Shoulder Stretch": 2, "Slow Walk Recovery": 2
+        }
     },
     {
         "id": "home-cardio",
@@ -43,8 +53,12 @@ def build_workout_sets(dataset, public_exercise):
             exercise = dataset["by_name"].get(exercise_name)
             if exercise is None:
                 raise ValueError("Workout set exercise is missing from the dataset: " + exercise_name)
-            exercises.append(public_exercise(exercise))
-            total_minutes += exercise["duration_min"]
+            item = dict(public_exercise(exercise))
+            item["duration_min"] = definition.get("durations", {}).get(
+                exercise_name, exercise["duration_min"]
+            )
+            exercises.append(item)
+            total_minutes += item["duration_min"]
 
         result.append({
             "id": definition["id"],

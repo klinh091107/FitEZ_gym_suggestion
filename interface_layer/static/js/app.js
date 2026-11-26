@@ -320,6 +320,17 @@ function exerciseVisual(exercise, index, groupLabel) {
   return `<div class="exercise-visual group-${escapeHtml(exercise.group)}">${number}<span class="visual-group">${escapeHtml(groupLabel)}</span></div>`;
 }
 
+// Muscle training durations cover all sets, so say how many there are.
+function setsLabel(exercise) {
+  return exercise.activity_type === "WeightTraining" ? " · 3 sets" : "";
+}
+
+// Plans saved before rest time was counted have no rest value.
+function restNote() {
+  const rest = latestResult.rest_between_exercises_min;
+  return rest ? `Muscle training: 3 sets with 1 min rest between sets. Rest ${rest} min between exercises.` : "";
+}
+
 function exerciseCard(exercise, index, featured = false) {
   const groupLabel = GROUP_LABELS[exercise.group] || exercise.group;
   const steps = (exercise.step_list || []).map((step) => `<li>${escapeHtml(step)}</li>`).join("");
@@ -328,7 +339,7 @@ function exerciseCard(exercise, index, featured = false) {
     ${exerciseVisual(exercise, index, groupLabel)}
     <div class="exercise-content"><div class="exercise-topline"><span class="mini-tag">${escapeHtml(exercise.level)}</span><span class="mini-tag">${escapeHtml(exercise.category)}</span><span class="score-tag">${exercise.score ?? ""} PTS</span>${exercise.beginner_bonus ? '<span class="bonus-tag">BEGINNER +1</span>' : ""}</div>
     <h3>${escapeHtml(exercise.name)}</h3><p class="exercise-desc">${escapeHtml(description)}</p>
-    <div class="exercise-meta"><span class="meta-chip">◷ ${exercise.duration_min} min</span><span class="meta-chip">▣ ${escapeHtml(exercise.equipment)}</span><span class="meta-chip">${escapeHtml(exercise.primary_muscle)}</span></div>
+    <div class="exercise-meta"><span class="meta-chip">◷ ${exercise.duration_min} min${setsLabel(exercise)}</span><span class="meta-chip">▣ ${escapeHtml(exercise.equipment)}</span><span class="meta-chip">${escapeHtml(exercise.primary_muscle)}</span></div>
     ${steps ? `<details class="exercise-details"><summary>How to perform</summary><ol>${steps}</ol></details>` : ""}</div>
   </article>`;
 }
@@ -339,7 +350,10 @@ function renderRecommendations() {
 
   let exercises = latestResult.top_k;
   if (activeGroup !== "All") exercises = latestResult.by_group[activeGroup] || [];
-  const totalMinutes = exercises.reduce((total, exercise) => total + exercise.duration_min, 0);
+  const exerciseMinutes = exercises.reduce((total, exercise) => total + exercise.duration_min, 0);
+  const restMinutes = Math.max(exercises.length - 1, 0) * (latestResult.rest_between_exercises_min || 0);
+  const totalMinutes = exerciseMinutes + restMinutes;
+  $("#today-rest-note").textContent = restNote();
   // Plans saved before the time limit was added have no today_minutes.
   const timeLabel = latestResult.today_minutes ? ` · ${totalMinutes}/${latestResult.today_minutes} MIN` : "";
   $("#recommendation-count").textContent = `${exercises.length} ${activeGroup === "All" ? "TOP PICKS" : "IN GROUP"}${timeLabel}`;
@@ -411,6 +425,8 @@ function renderSchedule() {
   $("#schedule-exercises").textContent = totalExercises;
   $("#schedule-minutes").textContent = totalMinutes;
 
+  $("#plan-rest-note").textContent = restNote();
+
   const mobilityChoice = savedProfile && savedProfile.include_hip_mobility;
   $("#plan-mobility-note").textContent = mobilityChoice
     ? "Hip Mobility is included in each training day."
@@ -430,7 +446,7 @@ function renderSchedule() {
     // Hip Mobility is listed and counted like any other exercise.
     const sessionExercises = [...day.exercises, ...day.hip_mobility];
     const exerciseMarkup = sessionExercises.map((exercise, index) =>
-      `<div class="day-exercise"><span class="day-index">${index + 1}</span><div><strong>${escapeHtml(exercise.name)}</strong><small>${escapeHtml(GROUP_LABELS[exercise.group] || exercise.group)} · ${exercise.duration_min} min · ${escapeHtml(exercise.equipment)}</small></div></div>`
+      `<div class="day-exercise"><span class="day-index">${index + 1}</span><div><strong>${escapeHtml(exercise.name)}</strong><small>${escapeHtml(GROUP_LABELS[exercise.group] || exercise.group)} · ${exercise.duration_min} min${setsLabel(exercise)} · ${escapeHtml(exercise.equipment)}</small></div></div>`
     ).join("");
 
     const coolDownMarkup = day.cool_down.length

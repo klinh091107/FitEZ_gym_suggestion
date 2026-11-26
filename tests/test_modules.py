@@ -15,7 +15,7 @@ os.environ.setdefault("SECRET_KEY", "test-only-secret")
 from dsa_core_layer.structures.max_heap import get_top_k
 from dsa_core_layer.exercise_ranker import passes_filters, rank_exercises, score_exercise
 from dsa_core_layer.progression_graph import build_graph, has_cycle, shortest_path
-from dsa_core_layer.scheduler import solve_daily_knapsack
+from dsa_core_layer.scheduler import solve_daily_knapsack, pick_warm_ups, fit_to_time, session_minutes
 from data_layer.data_loader import load_data
 from application_logic_layer.profile_parser import parse_profile, compute_bmi
 from application_logic_layer.recommender import recommend, public_exercise
@@ -144,6 +144,21 @@ class SchedulerTests(unittest.TestCase):
                 actual_time += pool[index]["units"]
             self.assertLessEqual(actual_time, budget)
 
+class SessionTimeTests(unittest.TestCase):
+    def test_weight_training_counts_three_sets_with_rest(self):
+        for exercise in DATASET["all_rows"]:
+            if exercise["activity_type"] == "WeightTraining":
+                # 3 sets of 1 minute and 2 rests of 1 minute.
+                self.assertEqual(exercise["duration_min"], 5)
+
+    def test_rest_is_counted_only_between_exercises(self):
+        ranked = [(1, {"duration_min": 5}) for _ in range(4)]
+        self.assertEqual(len(fit_to_time(ranked, 5, 4)), 1)
+        self.assertEqual(len(fit_to_time(ranked, 11, 4)), 1)
+        self.assertEqual(len(fit_to_time(ranked, 12, 4)), 2)
+        self.assertEqual(session_minutes([item for _, item in ranked]), 26)
+        self.assertEqual(session_minutes([]), 0)
+
 class DataAndRankerTests(unittest.TestCase):
     def test_data_counts_and_edges(self):
         data = load_data(DATA_PATH, BEGINNER_PATH)
@@ -267,7 +282,7 @@ class RecommenderTests(unittest.TestCase):
         self.assertEqual(result["profile"]["bmi_class"], "Overweight")
         for day in result["schedule"]:
             self.assertLessEqual(day["main_minutes"], 45)
-            self.assertEqual(len(day["warm_up"]), 1)
+            self.assertEqual(len(day["warm_up"]), 3)
             self.assertEqual(len(day["cool_down"]), 1)
 
     def test_suggestions_fit_the_available_minutes(self):
@@ -278,17 +293,20 @@ class RecommenderTests(unittest.TestCase):
             result = recommend(payload, DATASET)
             self.assertTrue(result["top_k"])
             for picks in [result["top_k"]] + list(result["by_group"].values()):
-                self.assertLessEqual(sum(item["duration_min"] for item in picks), minutes)
+                self.assertLessEqual(session_minutes(picks), minutes)
             today_hip = [item for item in result["top_k"] if item["group"] == "hip_mobility"]
             self.assertEqual(len(today_hip), 2 if minutes > 10 else 0)
             self.assertLessEqual(len(result["top_k"]) - len(today_hip), 5)
             for day in result["schedule"]:
                 self.assertTrue(day["exercises"])
                 hip_minutes = sum(item["duration_min"] for item in day["hip_mobility"])
-                self.assertEqual(day["total_minutes"], day["main_minutes"] + hip_minutes)
+                sessions = day["exercises"] + day["hip_mobility"]
+                self.assertEqual(day["rest_minutes"], 2 * (len(sessions) - 1))
+                self.assertEqual(day["total_minutes"],
+                                 day["main_minutes"] + hip_minutes + day["rest_minutes"])
                 self.assertLessEqual(day["total_minutes"], minutes)
                 # Support moves are suggested separately, even on very short days.
-                self.assertEqual(len(day["warm_up"]), 1)
+                self.assertEqual(len(day["warm_up"]), 3)
                 self.assertEqual(len(day["cool_down"]), 1)
                 self.assertEqual(len(day["hip_mobility"]), 2 if minutes > 10 else 0)
 
@@ -330,16 +348,34 @@ class RecommenderTests(unittest.TestCase):
                 total += exercise["duration_min"]
             self.assertEqual(routine["duration_min"], total)
             self.assertEqual(routine["duration_min"], 10)
+        office_names = [item["name"] for item in routines[1]["exercises"]]
+        self.assertEqual(office_names[-1], "Slow Walk Recovery")
+        self.assertEqual(len(office_names), 5)
 
     def test_schedule_keeps_warm_up_and_cool_down_separate(self):
         payload = ParserTests().valid_payload()
         payload["include_stretch"] = True
         result = recommend(payload, DATASET)
         for day in result["schedule"]:
-            self.assertEqual(len(day["warm_up"]), 1)
+            self.assertEqual(len(day["warm_up"]), 3)
             self.assertEqual(len(day["cool_down"]), 1)
-            self.assertEqual(day["warm_up"][0]["role"], "warm up")
+            for exercise in day["warm_up"]:
+                self.assertEqual(exercise["role"], "warm up")
             self.assertEqual(day["cool_down"][0]["role"], "cool down")
+
+    def test_warm_ups_favour_the_most_trained_group(self):
+        def move(name, group):
+            return {"name": name, "group": group}
+
+        main = [move("A", "Chest"), move("B", "Back"), move("C", "Back"), move("D", "Cardio")]
+        pool = [move("chest 1", "Chest"), move("back 1", "Back"),
+                move("back 2", "Back"), move("core 1", "Core")]
+        used = set()
+        names = [item["name"] for item in pick_warm_ups(main, pool, used)]
+        self.assertEqual(names, ["back 1", "chest 1", "back 2"])
+        # A matching move is reused before an unrelated one is chosen.
+        again = [item["name"] for item in pick_warm_ups(main, pool, used)]
+        self.assertEqual(again, names)
 
     def test_stretch_toggle_does_not_change_main_selection(self):
         payload = {"height_cm": 165, "weight_kg": 65, "age": 22, "level": "beginner",

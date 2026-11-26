@@ -1,13 +1,13 @@
 # scheduler.py — choose exercises that fit the daily time budget.
 # Idea: use 0/1 knapsack DP with a bitmask to track trained muscle groups.
-# Time: O(items x time_units x 512). Space: O(time_units x 512).
+# Time: O(items x minutes x 512). Space: O(minutes x 512).
 
 NUM_GROUPS = 9
 POOL_CAP = 30
 MIN_GROUPS = 3
 MAX_DAILY_MIN = 120
-# Below this daily time, plan main exercises by exact minutes.
-SHORT_DAY_MIN = 20
+WARM_UP_COUNT = 3
+REST_BETWEEN_EXERCISES_MIN = 2
 
 
 def daily_budget_minutes(profile):
@@ -15,16 +15,24 @@ def daily_budget_minutes(profile):
     return min(profile["session_min"] * profile["sessions_per_day"], MAX_DAILY_MIN)
 
 
+def session_minutes(exercises):
+    """Return the exercise time plus the rest between consecutive exercises."""
+    rest = max(len(exercises) - 1, 0) * REST_BETWEEN_EXERCISES_MIN
+    return sum_minutes(exercises) + rest
+
+
 def fit_to_time(ranked, minutes, count):
-    """Take up to `count` exercises in rank order whose total time fits `minutes`."""
+    """Take up to `count` exercises in rank order that fit `minutes`, rest included."""
     picked = []
-    remaining = minutes
+    # The first exercise needs no rest before it, so give that rest back up front.
+    remaining = minutes + REST_BETWEEN_EXERCISES_MIN
     for score, exercise in ranked:
         if len(picked) == count:
             break
-        if exercise["duration_min"] <= remaining:
+        needed = exercise["duration_min"] + REST_BETWEEN_EXERCISES_MIN
+        if needed <= remaining:
             picked.append((score, exercise))
-            remaining -= exercise["duration_min"]
+            remaining -= needed
     return picked
 
 
@@ -95,13 +103,14 @@ def solve_daily_knapsack(pool, budget_units, min_groups, num_groups=NUM_GROUPS):
     return fallback[1], fallback[0], False
 
 
-def to_dp_items(exercises, scores, group_bits, exact_minutes=False):
+def to_dp_items(exercises, scores, group_bits):
     items = []
     # Keep only the score, time and group bit needed by the DP.
     for index in range(len(exercises)):
         items.append({
             "score": scores[index],
-            "units": exercises[index]["duration_min" if exact_minutes else "units"],
+            # Each exercise is charged its own time plus one rest.
+            "units": exercises[index]["duration_min"] + REST_BETWEEN_EXERCISES_MIN,
             "bit": group_bits[exercises[index]["group"]]
         })
     return items
@@ -109,7 +118,7 @@ def to_dp_items(exercises, scores, group_bits, exact_minutes=False):
 
 def pick_support_move(groups_today, exercise_pool, used_names):
     picked = []
-    # Prefer a warm-up or cool-down that matches one of today's trained groups.
+    # Prefer a cool-down that matches one of today's trained groups.
     for group in groups_today:
         for exercise in exercise_pool:
             if exercise["group"] == group and exercise["name"] not in used_names:
@@ -129,6 +138,45 @@ def pick_support_move(groups_today, exercise_pool, used_names):
         used_names.clear()
         picked.append(exercise_pool[0])
         used_names.add(exercise_pool[0]["name"])
+    return picked
+
+
+def groups_by_training_volume(exercises):
+    """Return the day's groups, the one with the most main exercises first."""
+    counts = {}
+    for exercise in exercises:
+        if exercise["group"] != "Cardio":
+            counts[exercise["group"]] = counts.get(exercise["group"], 0) + 1
+    # The sort is stable, so tied groups keep the order they appear in the day.
+    return sorted(counts, key=lambda group: -counts[group])
+
+
+def pick_warm_ups(exercises, warm_up_pool, used_names, count=WARM_UP_COUNT):
+    """Pick `count` different warm-ups, favouring the most trained muscle groups."""
+    # One queue per trained group, moves not yet used this week at the front.
+    queues = []
+    for group in groups_by_training_volume(exercises):
+        matching = [exercise for exercise in warm_up_pool if exercise["group"] == group]
+        matching.sort(key=lambda exercise: exercise["name"] in used_names)
+        queues.append(matching)
+
+    picked = []
+    # Take one move per group in turn, so the most trained group always goes first.
+    while len(picked) < count and any(queues):
+        for queue in queues:
+            if queue and len(picked) < count:
+                picked.append(queue.pop(0))
+
+    # Fill any remaining places with other movements, unused ones first.
+    others = sorted(warm_up_pool, key=lambda exercise: exercise["name"] in used_names)
+    for exercise in others:
+        if len(picked) == count:
+            break
+        if exercise not in picked:
+            picked.append(exercise)
+
+    for exercise in picked:
+        used_names.add(exercise["name"])
     return picked
 
 
@@ -166,14 +214,14 @@ def get_available_candidates(ranked, used):
     return available, False
 
 
-def select_daily_exercises(candidates, budget_units, group_bits, exact_minutes=False):
+def select_daily_exercises(candidates, budget_units, group_bits):
     exercises = []
     scores = []
     # Split ranked records into the data needed by the knapsack.
     for score, exercise in candidates:
         exercises.append(exercise)
         scores.append(score)
-    items = to_dp_items(exercises, scores, group_bits, exact_minutes)
+    items = to_dp_items(exercises, scores, group_bits)
     chosen, total_score, groups_ok = solve_daily_knapsack(
         items, budget_units, MIN_GROUPS, len(group_bits)
     )
@@ -206,11 +254,11 @@ def build_day_entry(day_index, selected, include_support, warm_up_pool, cool_dow
     cool_down = []
 
     if include_support:
-        warm_up = pick_support_move(groups_today, warm_up_pool, used_warm_up_names)
+        warm_up = pick_warm_ups(todays, warm_up_pool, used_warm_up_names)
         cool_down = pick_support_move(groups_today, cool_down_pool, used_cool_down_names)
 
-    # Hip Mobility is part of the session time; warm-up and cool-down are not.
-    total_minutes = main_minutes + sum_minutes(hip_mobility)
+    # Hip Mobility and rest are part of the session time; warm-up and cool-down are not.
+    total_minutes = session_minutes(todays + hip_mobility)
     return {
         "day": "Day " + str(day_index + 1),
         "exercises": todays,
@@ -219,6 +267,7 @@ def build_day_entry(day_index, selected, include_support, warm_up_pool, cool_dow
         "hip_mobility": hip_mobility,
         "total_minutes": total_minutes,
         "main_minutes": main_minutes,
+        "rest_minutes": total_minutes - main_minutes - sum_minutes(hip_mobility),
         "score": total_score,
         "min_groups_met": groups_ok
     }
@@ -226,7 +275,7 @@ def build_day_entry(day_index, selected, include_support, warm_up_pool, cool_dow
 
 def generate_weekly_schedule(ranked, profile, include_support, warm_up_pool,
                              cool_down_pool, include_hip_mobility, hip_mobility_pool,
-                             group_bits, unit_min):
+                             group_bits):
     daily_minutes = daily_budget_minutes(profile)
     used = set()
     used_warm_up_names = set()
@@ -238,22 +287,20 @@ def generate_weekly_schedule(ranked, profile, include_support, warm_up_pool,
         hip_mobility = []
         if include_hip_mobility:
             hip_mobility = pick_hip_mobility(hip_mobility_pool, used_hip_names, 2)
-        # Main exercises share whatever time Hip Mobility leaves.
-        main_budget = daily_minutes - sum_minutes(hip_mobility)
-        short_day = main_budget < SHORT_DAY_MIN
-        if short_day:
-            # Rounding to 2-minute units would drop 5-minute moves from a 5-minute day.
-            budget_units = main_budget
+        # Main exercises share whatever time Hip Mobility leaves. Every main exercise
+        # is charged one rest; without Hip Mobility the first one needs none.
+        if hip_mobility:
+            budget = daily_minutes - session_minutes(hip_mobility)
         else:
-            budget_units = main_budget // unit_min
+            budget = daily_minutes + REST_BETWEEN_EXERCISES_MIN
         # Drop exercises that are too long before the candidate pool is capped.
-        fitting = [pair for pair in ranked if pair[1]["duration_min"] <= main_budget]
+        fitting = [pair for pair in ranked if pair[1]["duration_min"] + REST_BETWEEN_EXERCISES_MIN <= budget]
 
         available, reset_used = get_available_candidates(fitting, used)
         if reset_used:
             used = set()
         candidates = available[:POOL_CAP]
-        selected = select_daily_exercises(candidates, budget_units, group_bits, short_day)
+        selected = select_daily_exercises(candidates, budget, group_bits)
         day_entry = build_day_entry(
             day_index, selected, include_support, warm_up_pool, cool_down_pool,
             hip_mobility, used_warm_up_names, used_cool_down_names

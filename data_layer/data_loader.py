@@ -15,7 +15,9 @@ GROUP_BIT = {}
 for index in range(len(GROUP_NAMES)):
     GROUP_BIT[GROUP_NAMES[index]] = 1 << index
 
-UNIT_MIN = 2
+# For muscle training (WeightTraining) the CSV duration is the time of one set.
+SETS_PER_EXERCISE = 3
+REST_BETWEEN_SETS_MIN = 1
 
 # The new CSV contains a few extra labels. Map them to the project's
 # eight training groups so the scheduler keeps one consistent group system.
@@ -59,7 +61,9 @@ def add_derived_fields(row):
     """Convert CSV fields and add values used by the algorithms."""
     row["id"] = int(row["id"])
     row["duration_min"] = int(row["duration_min"])
-    row["units"] = (row["duration_min"] + UNIT_MIN - 1) // UNIT_MIN
+    if row["activity_type"] == "WeightTraining":
+        rest_min = (SETS_PER_EXERCISE - 1) * REST_BETWEEN_SETS_MIN
+        row["duration_min"] = row["duration_min"] * SETS_PER_EXERCISE + rest_min
     row["source_group"] = row["group"]
     row["group"] = normalize_group(row)
     row["source_level"] = row["level"]

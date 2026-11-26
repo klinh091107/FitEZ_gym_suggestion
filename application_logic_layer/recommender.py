@@ -1,7 +1,10 @@
 """Connect profile validation, exercise ranking, progression and scheduling."""
 
 from dsa_core_layer.exercise_ranker import rank_exercises, rank_by_muscle_group
-from dsa_core_layer.scheduler import generate_weekly_schedule, daily_budget_minutes, fit_to_time
+from dsa_core_layer.scheduler import (
+    generate_weekly_schedule, daily_budget_minutes, fit_to_time, session_minutes,
+    REST_BETWEEN_EXERCISES_MIN
+)
 from application_logic_layer.profile_parser import parse_profile
 
 
@@ -49,8 +52,12 @@ def recommend(payload, dataset):
     today_hip = []
     if profile["include_hip_mobility"]:
         today_hip = fit_to_time(hip_pairs, today_minutes, 2)
-    hip_minutes = sum(exercise["duration_min"] for score, exercise in today_hip)
-    top_ranked = fit_to_time(all_ranked, today_minutes - hip_minutes, 5) + today_hip
+    main_minutes = today_minutes
+    if today_hip:
+        # Leave room for Hip Mobility and for the rest before it.
+        hip_exercises = [exercise for score, exercise in today_hip]
+        main_minutes -= session_minutes(hip_exercises) + REST_BETWEEN_EXERCISES_MIN
+    top_ranked = fit_to_time(all_ranked, main_minutes, 5) + today_hip
     group_ranked = rank_by_muscle_group(
         dataset["muscle_index"], profile, len(dataset["main_pool"]), beginner_bonus_names
     )
@@ -83,8 +90,7 @@ def recommend(payload, dataset):
         cool_down_ranked,
         profile["include_hip_mobility"],
         hip_ranked,
-        dataset["group_bit"],
-        2
+        dataset["group_bit"]
     )
 
     public_schedule = []
@@ -93,6 +99,7 @@ def recommend(payload, dataset):
             "day": day["day"],
             "total_minutes": day["total_minutes"],
             "main_minutes": day["main_minutes"],
+            "rest_minutes": day["rest_minutes"],
             "score": day["score"],
             "min_groups_met": day["min_groups_met"],
             "exercises": [],
@@ -126,6 +133,7 @@ def recommend(payload, dataset):
             "bmi_standard": profile["bmi_standard"]
         },
         "today_minutes": today_minutes,
+        "rest_between_exercises_min": REST_BETWEEN_EXERCISES_MIN,
         "top_k": public_ranked(top_ranked, profile, beginner_bonus_names),
         "by_group": public_groups,
         "schedule": public_schedule
