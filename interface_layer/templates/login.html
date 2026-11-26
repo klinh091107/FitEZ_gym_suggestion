@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#050505">
+  <title>FitEZ — Log in</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <main class="app-shell auth-shell">
+    <div class="brand">
+      <span class="brand-mark">F</span>
+      <span>Fit<span class="brand-accent">EZ</span><small>TRAIN WITH A PLAN</small></span>
+    </div>
+    <h1>Welcome <em>back.</em></h1>
+    <p class="muted-copy">Log in to see your profile and training plan.</p>
+    {% if error %}<div class="alert-banner" role="alert">{{ error }}</div>{% endif %}
+    <form class="auth-form" method="post">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <label>Email or username
+        <input type="text" name="login" value="{{ login_name }}" maxlength="254" autocomplete="username" autocapitalize="none" required autofocus>
+      </label>
+      <label>Password
+        <input type="password" name="password" maxlength="128" autocomplete="current-password" required>
+      </label>
+      <button class="generate-button" type="submit"><span>Log in</span><span>→</span></button>
+    </form>
+    <p class="auth-switch">New to FitEZ? <a href="{{ url_for('register') }}">Create an account</a></p>
+  </main>
+</body>
+</html>

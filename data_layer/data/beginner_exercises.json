@@ -1,0 +1,1183 @@
+{
+  "description": "Beginner exercise bonus mapping built from the supplied Markdown list and the exact exercise dataset.",
+  "bonus_points": 1,
+  "applies_when_level": "beginner",
+  "source_file": "beginner_exercises_by_muscle_matched.csvnames(1).md",
+  "source_item_count": 139,
+  "matched_source_item_count": 107,
+  "unique_dataset_exercise_count": 124,
+  "matched_items": [
+    {
+      "muscle_group": "1. Chest (Ngực)",
+      "source_name": "Push-Up",
+      "dataset_names": [
+        "Pushups"
+      ],
+      "match_type": "manual_alias"
+    },
+    {
+      "muscle_group": "1. Chest (Ngực)",
+      "source_name": "Knee Push-Up",
+      "dataset_names": [
+        "Knee Push-Up"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "1. Chest (Ngực)",
+      "source_name": "Dumbbell Bench Press",
+      "dataset_names": [
+        "Dumbbell Bench Press"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "1. Chest (Ngực)",
+      "source_name": "Dumbbell Floor Press",
+      "dataset_names": [
+        "Dumbbell Floor Press"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "1. Chest (Ngực)",
+      "source_name": "Dumbbell Bench Press with Neutral Grip",
+      "dataset_names": [
+        "Dumbbell Bench Press with Neutral Grip"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "1. Chest (Ngực)",
+      "source_name": "Machine Chest Press",
+      "dataset_names": [
+        "Leverage Chest Press"
+      ],
+      "match_type": "manual_alias"
+    },
+    {
+      "muscle_group": "1. Chest (Ngực)",
+      "source_name": "Cable Chest Press",
+      "dataset_names": [
+        "Cable Chest Press"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "1. Chest (Ngực)",
+      "source_name": "Incline Push-Up",
+      "dataset_names": [
+        "Incline Push-Up"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "1. Chest (Ngực)",
+      "source_name": "Pec Deck / Butterfly",
+      "dataset_names": [
+        "Butterfly"
+      ],
+      "match_type": "manual_alias"
+    },
+    {
+      "muscle_group": "1. Chest (Ngực)",
+      "source_name": "Alternating Floor Press",
+      "dataset_names": [
+        "Alternating Floor Press"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "2. Back (Lưng)",
+      "source_name": "Wide-Grip Lat Pulldown",
+      "dataset_names": [
+        "Wide-Grip Lat Pulldown"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "2. Back (Lưng)",
+      "source_name": "Close-Grip Lat Pulldown",
+      "dataset_names": [
+        "Close-Grip Front Lat Pulldown"
+      ],
+      "match_type": "manual_alias"
+    },
+    {
+      "muscle_group": "2. Back (Lưng)",
+      "source_name": "One Arm Lat Pulldown",
+      "dataset_names": [
+        "One Arm Lat Pulldown"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "2. Back (Lưng)",
+      "source_name": "Seated Cable Row",
+      "dataset_names": [
+        "Seated Cable Rows"
+      ],
+      "match_type": "manual_alias"
+    },
+    {
+      "muscle_group": "2. Back (Lưng)",
+      "source_name": "One-Arm Dumbbell Row",
+      "dataset_names": [
+        "One-Arm Dumbbell Row"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "2. Back (Lưng)",
+      "source_name": "Bent Over Two-Dumbbell Row",
+      "dataset_names": [
+        "Bent Over Two-Dumbbell Row"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "2. Back (Lưng)",
+      "source_name": "Inverted Row",
+      "dataset_names": [
+        "Inverted Row"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "2. Back (Lưng)",
+      "source_name": "Straight-Arm Pulldown",
+      "dataset_names": [
+        "Straight-Arm Pulldown"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "2. Back (Lưng)",
+      "source_name": "Bird Dog",
+      "dataset_names": [
+        "Bird Dog"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "3. Shoulders (Vai)",
+      "source_name": "Dumbbell Shoulder Press",
+      "dataset_names": [
+        "Dumbbell Shoulder Press"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "3. Shoulders (Vai)",
+      "source_name": "Seated Dumbbell Shoulder Press",
+      "dataset_names": [
+        "Seated Dumbbell Press"
+      ],
+      "match_type": "manual_alias"
+    },
+    {
+      "muscle_group": "3. Shoulders (Vai)",
+      "source_name": "Dumbbell Lateral Raise",
+      "dataset_names": [
+        "Side Lateral Raise"
+      ],
+      "match_type": "manual_alias"
+    },
+    {
+      "muscle_group": "3. Shoulders (Vai)",
+      "source_name": "Alternating Deltoid Raise",
+      "dataset_names": [
+        "Alternating Deltoid Raise"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "3. Shoulders (Vai)",
+      "source_name": "Dumbbell Scaption",
+      "dataset_names": [
+        "Dumbbell Scaption"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "3. Shoulders (Vai)",
+      "source_name": "Band Pull Apart",
+      "dataset_names": [
+        "Band Pull-Apart"
+      ],
+      "match_type": "normalised"
+    },
+    {
+      "muscle_group": "3. Shoulders (Vai)",
+      "source_name": "External Rotation with Band",
+      "dataset_names": [
+        "External Rotation with Band"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "3. Shoulders (Vai)",
+      "source_name": "Bent Over Dumbbell Rear Delt Raise",
+      "dataset_names": [
+        "Bent Over Dumbbell Rear Delt Raise With Head On Bench"
+      ],
+      "match_type": "manual_alias"
+    },
+    {
+      "muscle_group": "3. Shoulders (Vai)",
+      "source_name": "Arm Circles",
+      "dataset_names": [
+        "Arm Circles"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "4. Biceps (Tay trước)",
+      "source_name": "Dumbbell Bicep Curl",
+      "dataset_names": [
+        "Dumbbell Bicep Curl"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "4. Biceps (Tay trước)",
+      "source_name": "Dumbbell Alternate Bicep Curl",
+      "dataset_names": [
+        "Dumbbell Alternate Bicep Curl"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "4. Biceps (Tay trước)",
+      "source_name": "Hammer Curl",
+      "dataset_names": [
+        "Hammer Curls"
+      ],
+      "match_type": "manual_alias"
+    },
+    {
+      "muscle_group": "4. Biceps (Tay trước)",
+      "source_name": "Alternate Hammer Curl",
+      "dataset_names": [
+        "Alternate Hammer Curl"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "4. Biceps (Tay trước)",
+      "source_name": "Cross Body Hammer Curl",
+      "dataset_names": [
+        "Cross Body Hammer Curl"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "4. Biceps (Tay trước)",
+      "source_name": "Seated Dumbbell Curl",
+      "dataset_names": [
+        "Seated Dumbbell Curl"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "4. Biceps (Tay trước)",
+      "source_name": "Concentration Curl",
+      "dataset_names": [
+        "Concentration Curls"
+      ],
+      "match_type": "manual_alias"
+    },
+    {
+      "muscle_group": "4. Biceps (Tay trước)",
+      "source_name": "Machine Bicep Curl",
+      "dataset_names": [
+        "Machine Bicep Curl"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "4. Biceps (Tay trước)",
+      "source_name": "EZ-Bar Curl",
+      "dataset_names": [
+        "EZ-Bar Curl"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "5. Triceps (Tay sau)",
+      "source_name": "Cable Triceps Pushdown",
+      "dataset_names": [
+        "Triceps Pushdown"
+      ],
+      "match_type": "manual_alias"
+    },
+    {
+      "muscle_group": "5. Triceps (Tay sau)",
+      "source_name": "Rope Pushdown",
+      "dataset_names": [
+        "Triceps Pushdown - Rope Attachment"
+      ],
+      "match_type": "manual_alias"
+    },
+    {
+      "muscle_group": "5. Triceps (Tay sau)",
+      "source_name": "Reverse Grip Triceps Pushdown",
+      "dataset_names": [
+        "Reverse Grip Triceps Pushdown"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "5. Triceps (Tay sau)",
+      "source_name": "Dumbbell Triceps Extension",
+      "dataset_names": [
+        "Standing Dumbbell Triceps Extension"
+      ],
+      "match_type": "manual_alias"
+    },
+    {
+      "muscle_group": "5. Triceps (Tay sau)",
+      "source_name": "Seated Triceps Press",
+      "dataset_names": [
+        "Seated Triceps Press"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "5. Triceps (Tay sau)",
+      "source_name": "One-Arm Dumbbell Triceps Extension",
+      "dataset_names": [
+        "Standing One-Arm Dumbbell Triceps Extension"
+      ],
+      "match_type": "manual_alias"
+    },
+    {
+      "muscle_group": "5. Triceps (Tay sau)",
+      "source_name": "Machine Triceps Extension",
+      "dataset_names": [
+        "Machine Triceps Extension"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "5. Triceps (Tay sau)",
+      "source_name": "Incline Close-Grip Push-Up",
+      "dataset_names": [
+        "Incline Push-Up Close-Grip"
+      ],
+      "match_type": "manual_alias"
+    },
+    {
+      "muscle_group": "5. Triceps (Tay sau)",
+      "source_name": "Close-Grip Dumbbell Press",
+      "dataset_names": [
+        "Close-Grip Dumbbell Press"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "6. Core / Abs (Cơ bụng)",
+      "source_name": "Crunch",
+      "dataset_names": [
+        "Crunches"
+      ],
+      "match_type": "manual_alias"
+    },
+    {
+      "muscle_group": "6. Core / Abs (Cơ bụng)",
+      "source_name": "3/4 Sit-Up",
+      "dataset_names": [
+        "3/4 Sit-Up"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "6. Core / Abs (Cơ bụng)",
+      "source_name": "Dead Bug",
+      "dataset_names": [
+        "Dead Bug"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "6. Core / Abs (Cơ bụng)",
+      "source_name": "Bent-Knee Hip Raise",
+      "dataset_names": [
+        "Bent-Knee Hip Raise"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "6. Core / Abs (Cơ bụng)",
+      "source_name": "Reverse Crunch",
+      "dataset_names": [
+        "Reverse Crunch"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "6. Core / Abs (Cơ bụng)",
+      "source_name": "Alternate Heel Touchers",
+      "dataset_names": [
+        "Alternate Heel Touchers"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "6. Core / Abs (Cơ bụng)",
+      "source_name": "Cross-Body Crunch",
+      "dataset_names": [
+        "Cross-Body Crunch"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "6. Core / Abs (Cơ bụng)",
+      "source_name": "Flat Bench Leg Pull-In",
+      "dataset_names": [
+        "Flat Bench Leg Pull-In"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "6. Core / Abs (Cơ bụng)",
+      "source_name": "Exercise Ball Crunch",
+      "dataset_names": [
+        "Exercise Ball Crunch"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "6. Core / Abs (Cơ bụng)",
+      "source_name": "Plank",
+      "dataset_names": [
+        "Plank"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "6. Core / Abs (Cơ bụng)",
+      "source_name": "Forearm Plank",
+      "dataset_names": [
+        "Plank"
+      ],
+      "match_type": "manual_alias"
+    },
+    {
+      "muscle_group": "6. Core / Abs (Cơ bụng)",
+      "source_name": "Plank Shoulder Taps",
+      "dataset_names": [
+        "Plank Shoulder Taps"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "7. Obliques (Cơ bụng xiên)",
+      "source_name": "Russian Twist",
+      "dataset_names": [
+        "Russian Twist"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "7. Obliques (Cơ bụng xiên)",
+      "source_name": "Heel Touches",
+      "dataset_names": [
+        "Alternate Heel Touchers"
+      ],
+      "match_type": "manual_alias"
+    },
+    {
+      "muscle_group": "7. Obliques (Cơ bụng xiên)",
+      "source_name": "Standing Dumbbell Side Bend",
+      "dataset_names": [
+        "Dumbbell Side Bend"
+      ],
+      "match_type": "manual_alias"
+    },
+    {
+      "muscle_group": "8. Quadriceps (Đùi trước)",
+      "source_name": "Bodyweight Squat",
+      "dataset_names": [
+        "Bodyweight Squat"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "8. Quadriceps (Đùi trước)",
+      "source_name": "Chair Squat",
+      "dataset_names": [
+        "Chair Squat"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "8. Quadriceps (Đùi trước)",
+      "source_name": "Goblet Squat",
+      "dataset_names": [
+        "Goblet Squat"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "8. Quadriceps (Đùi trước)",
+      "source_name": "Dumbbell Squat",
+      "dataset_names": [
+        "Dumbbell Squat"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "8. Quadriceps (Đùi trước)",
+      "source_name": "Leg Press",
+      "dataset_names": [
+        "Leg Press"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "8. Quadriceps (Đùi trước)",
+      "source_name": "Leg Extension",
+      "dataset_names": [
+        "Leg Extensions"
+      ],
+      "match_type": "manual_alias"
+    },
+    {
+      "muscle_group": "8. Quadriceps (Đùi trước)",
+      "source_name": "Bodyweight Walking Lunge",
+      "dataset_names": [
+        "Bodyweight Walking Lunge"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "8. Quadriceps (Đùi trước)",
+      "source_name": "Dumbbell Lunges",
+      "dataset_names": [
+        "Dumbbell Lunges"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "8. Quadriceps (Đùi trước)",
+      "source_name": "Step-Up",
+      "dataset_names": [
+        "Step-up with Knee Raise"
+      ],
+      "match_type": "manual_alias"
+    },
+    {
+      "muscle_group": "8. Quadriceps (Đùi trước)",
+      "source_name": "Wall Sit",
+      "dataset_names": [
+        "Wall Sit"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "9. Hamstrings (Đùi sau)",
+      "source_name": "Seated Leg Curl",
+      "dataset_names": [
+        "Seated Leg Curl"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "9. Hamstrings (Đùi sau)",
+      "source_name": "Lying Leg Curl",
+      "dataset_names": [
+        "Lying Leg Curls"
+      ],
+      "match_type": "manual_alias"
+    },
+    {
+      "muscle_group": "9. Hamstrings (Đùi sau)",
+      "source_name": "Standing Leg Curl",
+      "dataset_names": [
+        "Standing Leg Curl"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "9. Hamstrings (Đùi sau)",
+      "source_name": "Seated Band Hamstring Curl",
+      "dataset_names": [
+        "Seated Band Hamstring Curl"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "9. Hamstrings (Đùi sau)",
+      "source_name": "Ball Leg Curl",
+      "dataset_names": [
+        "Ball Leg Curl"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "9. Hamstrings (Đùi sau)",
+      "source_name": "Hamstring Slides",
+      "dataset_names": [
+        "Platform Hamstring Slides"
+      ],
+      "match_type": "manual_alias"
+    },
+    {
+      "muscle_group": "9. Hamstrings (Đùi sau)",
+      "source_name": "Bodyweight Hip Hinge",
+      "dataset_names": [
+        "Bodyweight Good Morning"
+      ],
+      "match_type": "manual_alias"
+    },
+    {
+      "muscle_group": "9. Hamstrings (Đùi sau)",
+      "source_name": "90/90 Hamstring",
+      "dataset_names": [
+        "90/90 Hamstring"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "10. Glutes (Mông)",
+      "source_name": "Single Leg Glute Bridge",
+      "dataset_names": [
+        "Single Leg Glute Bridge"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "10. Glutes (Mông)",
+      "source_name": "Glute Bridge March",
+      "dataset_names": [
+        "Glute Bridge March"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "10. Glutes (Mông)",
+      "source_name": "Glute Kickback",
+      "dataset_names": [
+        "Glute Kickback"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "10. Glutes (Mông)",
+      "source_name": "Hip Extension with Bands",
+      "dataset_names": [
+        "Hip Extension with Bands"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "10. Glutes (Mông)",
+      "source_name": "Step-Up",
+      "dataset_names": [
+        "Step-up with Knee Raise"
+      ],
+      "match_type": "manual_alias"
+    },
+    {
+      "muscle_group": "10. Glutes (Mông)",
+      "source_name": "Butt Lift (Bridge)",
+      "dataset_names": [
+        "Butt Lift (Bridge)"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "11. Lower Back (Lưng dưới)",
+      "source_name": "Bird Dog",
+      "dataset_names": [
+        "Bird Dog"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "11. Lower Back (Lưng dưới)",
+      "source_name": "Cat-Cow",
+      "dataset_names": [
+        "Cat-Cow"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "11. Lower Back (Lưng dưới)",
+      "source_name": "Seated Cat-Cow",
+      "dataset_names": [
+        "Seated Cat-Cow"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "11. Lower Back (Lưng dưới)",
+      "source_name": "Superman",
+      "dataset_names": [
+        "Superman"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "11. Lower Back (Lưng dưới)",
+      "source_name": "Superman Hold",
+      "dataset_names": [
+        "Superman"
+      ],
+      "match_type": "manual_alias"
+    },
+    {
+      "muscle_group": "11. Lower Back (Lưng dưới)",
+      "source_name": "Good Morning, Bodyweight",
+      "dataset_names": [
+        "Good Morning, Bodyweight"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "11. Lower Back (Lưng dưới)",
+      "source_name": "Prone Alternating Leg Lift",
+      "dataset_names": [
+        "Prone Alternating Leg Lift"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "11. Lower Back (Lưng dưới)",
+      "source_name": "Prone Swimmer",
+      "dataset_names": [
+        "Prone Swimmer"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "11. Lower Back (Lưng dưới)",
+      "source_name": "Supine Pelvic Tilt",
+      "dataset_names": [
+        "Supine Pelvic Tilt"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "11. Lower Back (Lưng dưới)",
+      "source_name": "Wall Hip Hinge",
+      "dataset_names": [
+        "Wall Hip Hinge"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "11. Lower Back (Lưng dưới)",
+      "source_name": "Sphinx Pose",
+      "dataset_names": [
+        "Sphinx Pose"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "12. Calves (Bắp chân)",
+      "source_name": "Standing Calf Raise",
+      "dataset_names": [
+        "Standing Calf Raises"
+      ],
+      "match_type": "manual_alias"
+    },
+    {
+      "muscle_group": "12. Calves (Bắp chân)",
+      "source_name": "Bodyweight Calf Raise",
+      "dataset_names": [
+        "Bodyweight Calf Raise"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "12. Calves (Bắp chân)",
+      "source_name": "Seated Calf Raise",
+      "dataset_names": [
+        "Seated Calf Raise"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "12. Calves (Bắp chân)",
+      "source_name": "Dumbbell Seated One-Leg Calf Raise",
+      "dataset_names": [
+        "Dumbbell Seated One-Leg Calf Raise"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "12. Calves (Bắp chân)",
+      "source_name": "Calf Press",
+      "dataset_names": [
+        "Calf Press"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "12. Calves (Bắp chân)",
+      "source_name": "Calf Press on Leg Press Machine",
+      "dataset_names": [
+        "Calf Press On The Leg Press Machine"
+      ],
+      "match_type": "manual_alias"
+    },
+    {
+      "muscle_group": "12. Calves (Bắp chân)",
+      "source_name": "Rocking Standing Calf Raise",
+      "dataset_names": [
+        "Rocking Standing Calf Raise"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "12. Calves (Bắp chân)",
+      "source_name": "Calf Raise with Bands",
+      "dataset_names": [
+        "Calf Raises - With Bands"
+      ],
+      "match_type": "manual_alias"
+    },
+    {
+      "muscle_group": "13. Forearms & Grip (Cẳng tay / lực nắm)",
+      "source_name": "Wrist Curl",
+      "dataset_names": [
+        "Palms-Up Barbell Wrist Curl Over A Bench",
+        "Palms-Up Dumbbell Wrist Curl Over A Bench"
+      ],
+      "match_type": "manual_alias"
+    },
+    {
+      "muscle_group": "13. Forearms & Grip (Cẳng tay / lực nắm)",
+      "source_name": "Reverse Wrist Curl",
+      "dataset_names": [
+        "Palms-Down Wrist Curl Over A Bench",
+        "Palms-Down Dumbbell Wrist Curl Over A Bench"
+      ],
+      "match_type": "manual_alias"
+    },
+    {
+      "muscle_group": "13. Forearms & Grip (Cẳng tay / lực nắm)",
+      "source_name": "Dumbbell Wrist Curl",
+      "dataset_names": [
+        "Palms-Up Dumbbell Wrist Curl Over A Bench",
+        "Seated Dumbbell Palms-Up Wrist Curl"
+      ],
+      "match_type": "manual_alias"
+    },
+    {
+      "muscle_group": "13. Forearms & Grip (Cẳng tay / lực nắm)",
+      "source_name": "Wrist Rotations",
+      "dataset_names": [
+        "Wrist Rotations with Straight Bar"
+      ],
+      "match_type": "manual_alias"
+    },
+    {
+      "muscle_group": "13. Forearms & Grip (Cẳng tay / lực nắm)",
+      "source_name": "Wrist Roller",
+      "dataset_names": [
+        "Wrist Roller"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "13. Forearms & Grip (Cẳng tay / lực nắm)",
+      "source_name": "Finger Curls",
+      "dataset_names": [
+        "Finger Curls"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "13. Forearms & Grip (Cẳng tay / lực nắm)",
+      "source_name": "Farmer's Walk",
+      "dataset_names": [
+        "Farmer's Walk"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "13. Forearms & Grip (Cẳng tay / lực nắm)",
+      "source_name": "Plate Pinch",
+      "dataset_names": [
+        "Plate Pinch"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "14. Cardio (Tim mạch / thể lực)",
+      "source_name": "Brisk Walking, Outdoor",
+      "dataset_names": [
+        "Brisk Walking, Outdoor"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "14. Cardio (Tim mạch / thể lực)",
+      "source_name": "Walking, Treadmill",
+      "dataset_names": [
+        "Walking, Treadmill"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "14. Cardio (Tim mạch / thể lực)",
+      "source_name": "Bicycling, Stationary",
+      "dataset_names": [
+        "Bicycling, Stationary"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "14. Cardio (Tim mạch / thể lực)",
+      "source_name": "Recumbent Bike",
+      "dataset_names": [
+        "Recumbent Bike"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "14. Cardio (Tim mạch / thể lực)",
+      "source_name": "Jumping Jacks",
+      "dataset_names": [
+        "Jumping Jacks"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "14. Cardio (Tim mạch / thể lực)",
+      "source_name": "Fast Skipping",
+      "dataset_names": [
+        "Fast Skipping"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "14. Cardio (Tim mạch / thể lực)",
+      "source_name": "Mountain Climbers",
+      "dataset_names": [
+        "Mountain Climbers"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "14. Cardio (Tim mạch / thể lực)",
+      "source_name": "Stair Climbing, Building Stairs",
+      "dataset_names": [
+        "Stair Climbing, Building Stairs"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "14. Cardio (Tim mạch / thể lực)",
+      "source_name": "Hiking",
+      "dataset_names": [
+        "Hiking"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "14. Cardio (Tim mạch / thể lực)",
+      "source_name": "Dance Cardio",
+      "dataset_names": [
+        "Dance Cardio"
+      ],
+      "match_type": "exact"
+    },
+    {
+      "muscle_group": "2. Back (Lưng)",
+      "source_name": "Lat Pulldown",
+      "dataset_names": [
+        "Full Range-Of-Motion Lat Pulldown"
+      ],
+      "match_type": "manual_alias"
+    },
+    {
+      "muscle_group": "2. Back (Lưng)",
+      "source_name": "Chest-Supported Dumbbell Row",
+      "dataset_names": [
+        "Dumbbell Incline Row"
+      ],
+      "match_type": "manual_alias"
+    },
+    {
+      "muscle_group": "3. Shoulders (Vai)",
+      "source_name": "Dumbbell Front Raise",
+      "dataset_names": [
+        "Front Dumbbell Raise"
+      ],
+      "match_type": "manual_alias"
+    },
+    {
+      "muscle_group": "7. Obliques (Cơ bụng xiên)",
+      "source_name": "Side Plank",
+      "dataset_names": [
+        "Side Bridge"
+      ],
+      "match_type": "manual_alias"
+    },
+    {
+      "muscle_group": "7. Obliques (Cơ bụng xiên)",
+      "source_name": "Forearm Side Plank",
+      "dataset_names": [
+        "Side Bridge"
+      ],
+      "match_type": "manual_alias"
+    },
+    {
+      "muscle_group": "7. Obliques (Cơ bụng xiên)",
+      "source_name": "Side Plank from Knees",
+      "dataset_names": [
+        "Side Bridge"
+      ],
+      "match_type": "manual_alias"
+    },
+    {
+      "muscle_group": "7. Obliques (Cơ bụng xiên)",
+      "source_name": "Side Plank Hip Lift",
+      "dataset_names": [
+        "Side Bridge"
+      ],
+      "match_type": "manual_alias"
+    },
+    {
+      "muscle_group": "9. Hamstrings (Đùi sau)",
+      "source_name": "Romanian Deadlift (light)",
+      "dataset_names": [
+        "Romanian Deadlift"
+      ],
+      "match_type": "manual_alias"
+    }
+  ],
+  "bonus_exercise_names": [
+    "Knee Push-Up",
+    "Dumbbell Bench Press",
+    "Dumbbell Floor Press",
+    "Dumbbell Bench Press with Neutral Grip",
+    "Leverage Chest Press",
+    "Cable Chest Press",
+    "Incline Push-Up",
+    "Alternating Floor Press",
+    "Wide-Grip Lat Pulldown",
+    "One Arm Lat Pulldown",
+    "Seated Cable Rows",
+    "One-Arm Dumbbell Row",
+    "Bent Over Two-Dumbbell Row",
+    "Inverted Row",
+    "Straight-Arm Pulldown",
+    "Bird Dog",
+    "Dumbbell Shoulder Press",
+    "Side Lateral Raise",
+    "Alternating Deltoid Raise",
+    "Dumbbell Scaption",
+    "External Rotation with Band",
+    "Arm Circles",
+    "Dumbbell Bicep Curl",
+    "Dumbbell Alternate Bicep Curl",
+    "Hammer Curls",
+    "Alternate Hammer Curl",
+    "Cross Body Hammer Curl",
+    "Seated Dumbbell Curl",
+    "Machine Bicep Curl",
+    "EZ-Bar Curl",
+    "Triceps Pushdown - Rope Attachment",
+    "Reverse Grip Triceps Pushdown",
+    "Standing Dumbbell Triceps Extension",
+    "Seated Triceps Press",
+    "Standing One-Arm Dumbbell Triceps Extension",
+    "Machine Triceps Extension",
+    "Close-Grip Dumbbell Press",
+    "3/4 Sit-Up",
+    "Dead Bug",
+    "Bent-Knee Hip Raise",
+    "Reverse Crunch",
+    "Alternate Heel Touchers",
+    "Cross-Body Crunch",
+    "Flat Bench Leg Pull-In",
+    "Exercise Ball Crunch",
+    "Plank",
+    "Plank Shoulder Taps",
+    "Russian Twist",
+    "Dumbbell Side Bend",
+    "Bodyweight Squat",
+    "Chair Squat",
+    "Goblet Squat",
+    "Dumbbell Squat",
+    "Leg Press",
+    "Bodyweight Walking Lunge",
+    "Dumbbell Lunges",
+    "Step-up with Knee Raise",
+    "Wall Sit",
+    "Seated Leg Curl",
+    "Standing Leg Curl",
+    "Seated Band Hamstring Curl",
+    "Ball Leg Curl",
+    "Bodyweight Good Morning",
+    "90/90 Hamstring",
+    "Single Leg Glute Bridge",
+    "Glute Bridge March",
+    "Glute Kickback",
+    "Hip Extension with Bands",
+    "Butt Lift (Bridge)",
+    "Cat-Cow",
+    "Seated Cat-Cow",
+    "Superman",
+    "Good Morning, Bodyweight",
+    "Prone Alternating Leg Lift",
+    "Prone Swimmer",
+    "Supine Pelvic Tilt",
+    "Wall Hip Hinge",
+    "Sphinx Pose",
+    "Standing Calf Raises",
+    "Bodyweight Calf Raise",
+    "Seated Calf Raise",
+    "Dumbbell Seated One-Leg Calf Raise",
+    "Calf Press",
+    "Rocking Standing Calf Raise",
+    "Palms-Up Barbell Wrist Curl Over A Bench",
+    "Palms-Up Dumbbell Wrist Curl Over A Bench",
+    "Palms-Down Wrist Curl Over A Bench",
+    "Palms-Down Dumbbell Wrist Curl Over A Bench",
+    "Seated Dumbbell Palms-Up Wrist Curl",
+    "Wrist Rotations with Straight Bar",
+    "Wrist Roller",
+    "Finger Curls",
+    "Farmer's Walk",
+    "Plate Pinch",
+    "Brisk Walking, Outdoor",
+    "Walking, Treadmill",
+    "Bicycling, Stationary",
+    "Recumbent Bike",
+    "Jumping Jacks",
+    "Fast Skipping",
+    "Mountain Climbers",
+    "Stair Climbing, Building Stairs",
+    "Hiking",
+    "Dance Cardio",
+    "Full Range-Of-Motion Lat Pulldown",
+    "Dumbbell Incline Row",
+    "Side Bridge"
+  ],
+  "unmatched_items": [
+    "Pushups",
+    "Butterfly",
+    "Close-Grip Front Lat Pulldown",
+    "Seated Dumbbell Press",
+    "Band Pull-Apart",
+    "Bent Over Dumbbell Rear Delt Raise With Head On Bench",
+    "Concentration Curls",
+    "Triceps Pushdown",
+    "Incline Push-Up Close-Grip",
+    "Crunches",
+    "Leg Extensions",
+    "Lying Leg Curls",
+    "Platform Hamstring Slides",
+    "Calf Press On The Leg Press Machine",
+    "Calf Raises - With Bands",
+    "Front Dumbbell Raise",
+    "Romanian Deadlift"
+  ],
+  "source_note": "Names are matched exactly against exercises(2).csv. Unmatched names do not receive a bonus."
+}

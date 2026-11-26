@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#050505">
+  <title>FitEZ — Create account</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <main class="app-shell auth-shell">
+    <div class="brand">
+      <span class="brand-mark">F</span>
+      <span>Fit<span class="brand-accent">EZ</span><small>TRAIN WITH A PLAN</small></span>
+    </div>
+    <h1>Create your <em>account.</em></h1>
+    <p class="muted-copy">Your profile and plans are saved to your account.</p>
+    {% if error %}<div class="alert-banner" role="alert">{{ error }}</div>{% endif %}
+    <form class="auth-form" method="post">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <label>Username
+        <input type="text" name="username" value="{{ username }}" minlength="3" maxlength="30" pattern="\s*[A-Za-z0-9_]{3,30}\s*" autocomplete="username" autocapitalize="none" required autofocus>
+        <small>3–30 letters, numbers or underscores</small>
+      </label>
+      <label>Email
+        <input type="email" name="email" value="{{ email }}" maxlength="254" autocomplete="email" required>
+      </label>
+      <label>Password
+        <input type="password" name="password" minlength="8" maxlength="128" autocomplete="new-password" required>
+        <small>At least 8 characters</small>
+      </label>
+      <label>Confirm password
+        <input type="password" name="confirm_password" minlength="8" maxlength="128" autocomplete="new-password" required>
+      </label>
+      <button class="generate-button" type="submit"><span>Create account</span><span>→</span></button>
+    </form>
+    <p class="auth-switch">Already have an account? <a href="{{ url_for('login') }}">Log in</a></p>
+  </main>
+</body>
+</html>

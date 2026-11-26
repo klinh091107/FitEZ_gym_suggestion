@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#050505">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <title>FitEZ — Workout Recommender</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="FitEZ home">
+        <span class="brand-mark">F</span>
+        <span>Fit<span class="brand-accent">EZ</span><small>TRAIN WITH A PLAN</small></span>
+      </a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <button class="nav-tab active" data-tab="profile">Profile</button>
+        <button class="nav-tab" data-tab="today-exercise">Today Exercise</button>
+        <button class="nav-tab" data-tab="all-exercise">All Exercise</button>
+        <button class="nav-tab" data-tab="quick-routines">Quick Routines</button>
+        <button class="nav-tab" data-tab="progression">Progression</button>
+        <button class="nav-tab" data-tab="schedule">Your plan</button>
+      </nav>
+      <div class="header-actions">
+        <div class="profile-summary" id="header-summary">
+          <span class="summary-dot"></span><span id="summary-text">Set up your profile</span>
+        </div>
+        <span class="user-name" title="{{ user.email }}">{{ user.username }}</span>
+        <form method="post" action="{{ url_for('logout') }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button class="logout-button" type="submit">Log out</button>
+        </form>
+      </div>
+    </header>
+
+    <section class="intro-row" id="top">
+      <div>
+        <p class="eyebrow">SMARTER TRAINING STARTS HERE</p>
+        <h1>Build a routine<br><em>that moves you.</em></h1>
+        <p class="intro-copy">Personalised exercise picks and a weekly workout plan, shaped around your goals and equipment.</p>
+      </div>
+      <div class="dataset-pill">
+        <span class="pulse"></span><span><strong id="dataset-count">1066</strong> exercises available</span>
+        <span class="pill-divider"></span><span>Personalised training</span>
+      </div>
+    </section>
+
+    <div class="workspace">
+      <section class="results-area">
+        <div class="alert-banner hidden" id="error-banner" role="alert"></div>
+        <div class="loading-state hidden" id="loading-state">
+          <div class="loader"></div><strong>Building your workout plan</strong><span>Finding exercises for your profile</span>
+        </div>
+
+        <!-- PROFILE TAB -->
+        <section class="tab-panel active profile-tab" id="tab-profile">
+          <div class="results-heading profile-heading">
+            <div>
+              <p class="eyebrow">YOUR DETAILS</p>
+              <h2>Training <em>profile.</em></h2>
+              <p class="muted-copy">Set your details once. FitEZ uses them to personalise your exercise recommendations and weekly plan.</p>
+            </div>
+            <span class="result-count">STEP 1 · SET UP</span>
+          </div>
+
+          <div class="sidebar" id="profile-panel">
+            <form id="profile-form">
+              <section class="form-section">
+                <div class="section-title"><span>01</span><h3>About you</h3></div>
+                <div class="three-inputs">
+                  <label>Height <span>cm</span><input type="number" id="height" name="height_cm" min="120" max="230" value="165" required><small class="input-limit">120–230 cm</small></label>
+                  <label>Weight <span>kg</span><input type="number" id="weight" name="weight_kg" min="30" max="180" step="0.1" value="65" required><small class="input-limit">30–180 kg</small></label>
+                  <label>Age <span>yrs</span><input type="number" id="age" name="age" min="16" max="60" value="22" required><small class="input-limit">16–60 yrs</small></label>
+                </div>
+                <label class="bmi-standard-label" for="bmi-standard">BMI standard
+                  <select id="bmi-standard" name="bmi_standard">
+                    <option value="asian" selected>Asian</option>
+                    <option value="european">European</option>
+                  </select>
+                </label>
+                <div class="bmi-preview" id="bmi-preview">BMI will be calculated from your details.</div>
+              </section>
+
+              <section class="form-section">
+                <div class="section-title"><span>02</span><h3>Experience level</h3></div>
+                <div class="choice-row" id="level-options">
+                  <label class="choice-card selected"><input type="radio" name="level" value="beginner" checked><span>Beginner</span></label>
+                  <label class="choice-card"><input type="radio" name="level" value="intermediate"><span>Intermediate</span></label>
+                  <label class="choice-card"><input type="radio" name="level" value="expert"><span>Expert</span></label>
+                </div>
+              </section>
+
+              <section class="form-section">
+                <div class="section-title"><span>03</span><h3>Your goals</h3><small>Choose all that apply</small></div>
+                <div class="pill-options" id="goal-options">
+                  <label class="select-pill selected"><input type="checkbox" name="goals" value="lose_weight" checked><span>Lose weight</span></label>
+                  <label class="select-pill"><input type="checkbox" name="goals" value="build_muscle"><span>Build muscle</span></label>
+                  <label class="select-pill"><input type="checkbox" name="goals" value="get_stronger"><span>Get stronger</span></label>
+                  <label class="select-pill"><input type="checkbox" name="goals" value="endurance"><span>Endurance</span></label>
+                </div>
+              </section>
+
+              <section class="form-section">
+                <div class="section-title"><span>04</span><h3>Available equipment</h3></div>
+                <p class="hint">Bodyweight exercises are always included.</p>
+                <label class="choose-all-equipment"><input type="checkbox" id="choose-all-equipment"><span class="fake-check"></span><strong>Choose all equipment</strong></label>
+                <div class="check-grid" id="equipment-options">
+                  <label><input type="checkbox" name="equipment" value="dumbbell" checked><span class="fake-check"></span>Dumbbell</label>
+                  <label><input type="checkbox" name="equipment" value="barbell"><span class="fake-check"></span>Barbell</label>
+                  <label><input type="checkbox" name="equipment" value="machine" checked><span class="fake-check"></span>Machine</label>
+                  <label><input type="checkbox" name="equipment" value="cable"><span class="fake-check"></span>Cable</label>
+                  <label><input type="checkbox" name="equipment" value="kettlebells"><span class="fake-check"></span>Kettlebells</label>
+                  <label><input type="checkbox" name="equipment" value="bands"><span class="fake-check"></span>Bands</label>
+                  <label><input type="checkbox" name="equipment" value="medicine ball"><span class="fake-check"></span>Medicine ball</label>
+                  <label><input type="checkbox" name="equipment" value="exercise ball"><span class="fake-check"></span>Exercise ball</label>
+                  <label><input type="checkbox" name="equipment" value="e-z curl bar"><span class="fake-check"></span>E-Z curl bar</label>
+                  <label><input type="checkbox" name="equipment" value="foam roll"><span class="fake-check"></span>Foam roll</label>
+                  <label><input type="checkbox" name="equipment" value="other"><span class="fake-check"></span>Other</label>
+                </div>
+                <label class="bar-toggle"><input type="checkbox" id="pullup-bar"><span class="fake-check"></span><span>Pull-up bar available</span></label>
+              </section>
+
+              <section class="form-section">
+                <div class="section-title"><span>05</span><h3>Focus muscles</h3><small>Optional</small></div>
+                <div class="pill-options compact" id="focus-options">
+                  <label class="select-pill"><input type="checkbox" name="focus_muscles" value="Chest"><span>Chest</span></label>
+                  <label class="select-pill"><input type="checkbox" name="focus_muscles" value="Back"><span>Back</span></label>
+                  <label class="select-pill"><input type="checkbox" name="focus_muscles" value="Shoulders"><span>Shoulders</span></label>
+                  <label class="select-pill"><input type="checkbox" name="focus_muscles" value="Arms"><span>Arms</span></label>
+                  <label class="select-pill"><input type="checkbox" name="focus_muscles" value="LegsFront"><span>Legs</span></label>
+                  <label class="select-pill"><input type="checkbox" name="focus_muscles" value="Posterior"><span>Glutes</span></label>
+                  <label class="select-pill"><input type="checkbox" name="focus_muscles" value="Core"><span>Core</span></label>
+                  <label class="select-pill"><input type="checkbox" name="focus_muscles" value="Cardio"><span>Cardio</span></label>
+                </div>
+              </section>
+
+              <section class="form-section schedule-settings">
+                <div class="section-title"><span>06</span><h3>Weekly availability</h3></div>
+                <div class="range-label"><label for="days">Training days</label><output id="days-value">3 days / week</output></div>
+                <input type="range" id="days" min="1" max="6" value="3">
+                <div class="range-label"><label for="minutes">Minutes per session</label><output id="minutes-value">45 min</output></div>
+                <input type="range" id="minutes" min="5" max="120" step="5" value="45">
+                <div class="hip-mobility-option" id="hip-mobility-option">
+                  <label class="stretch-toggle"><input type="checkbox" id="include-hip-mobility"><span class="switch"></span><span><strong>Would you like to include Hip Mobility?</strong><small>Counted in your session time, like any other exercise.</small></span></label>
+                </div>
+                <div class="range-label"><label for="sessions">Sessions per day</label><output id="sessions-value">1 session</output></div>
+                <input type="range" id="sessions" min="1" max="3" value="1">
+              </section>
+
+              <div class="profile-actions">
+                <button class="generate-button" type="submit"><span>Save profile</span><span class="button-arrow">→</span></button>
+                <p class="privacy-note"><span>✦</span> Your profile is saved to your account.</p>
+                <p class="save-status hidden" id="profile-save-status" role="status">Profile saved. Open Today Exercise and press Discover.</p>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <!-- TODAY EXERCISE TAB -->
+        <section class="tab-panel" id="tab-today-exercise">
+          <div class="results-heading today-heading">
+            <div>
+              <p class="eyebrow">YOUR DAILY WORKOUT</p>
+              <h2>Today <em>Exercise.</em></h2>
+              <p class="muted-copy">Discover exercises matched to your goals, experience and available equipment.</p>
+            </div>
+            <div class="today-actions">
+              <span class="result-count" id="recommendation-count">TOP PICKS</span>
+              <button class="discover-button" id="discover-button" type="button"><span>Discover</span><span>✦</span></button>
+            </div>
+          </div>
+          <div class="filter-strip" id="group-filters"><button class="filter-chip active" data-group="All">Today Plan</button></div>
+          <div class="exercise-grid" id="recommendation-grid">
+            <div class="empty-state">
+              <span class="empty-icon">✳</span><h3>Ready to find your exercises?</h3>
+              <p>Save your profile, then press Discover to get exercise recommendations for today.</p>
+            </div>
+          </div>
+</section>
+
+        <!-- ALL EXERCISE TAB -->
+        <section class="tab-panel" id="tab-all-exercise">
+          <div class="results-heading">
+            <div>
+              <p class="eyebrow">EXERCISE LIBRARY</p>
+              <h2>ALL <em>Exercise.</em></h2>
+              <p class="muted-copy">Browse every exercise in the dataset. Filter by muscle group and experience level.</p>
+            </div>
+            <span class="result-count" id="all-exercise-count">1,066 EXERCISES</span>
+          </div>
+          <div class="catalog-controls">
+            <label>Muscle group
+              <select id="catalog-group"><option value="all">All groups</option></select>
+            </label>
+            <label>Experience level
+              <select id="catalog-level">
+                <option value="all">All levels</option>
+                <option value="beginner">Beginner</option>
+                <option value="intermediate">Intermediate</option>
+                <option value="expert">Expert</option>
+              </select>
+            </label>
+          </div>
+          <div class="catalog-list" id="catalog-list">
+            <div class="empty-state"><span class="empty-icon">▤</span><h3>Loading exercise library</h3><p>All exercises will appear here.</p></div>
+          </div>
+        </section>
+
+        <!-- QUICK ROUTINES TAB -->
+        <section class="tab-panel" id="tab-quick-routines">
+          <div class="results-heading">
+            <div>
+              <p class="eyebrow">READY-MADE WORKOUT IDEAS</p>
+              <h2>Quick <em>routines.</em></h2>
+              <p class="muted-copy">Short exercise sets for stretching, desk breaks and cardio. Every movement comes from the exercise dataset.</p>
+            </div>
+            <span class="result-count" id="routine-count">3 ROUTINES</span>
+          </div>
+          <div class="routine-grid" id="routine-grid">
+            <div class="empty-state"><span class="empty-icon">✳</span><h3>Loading quick routines</h3><p>Your short workout sets will appear here.</p></div>
+          </div>
+        </section>
+
+        <!-- PROGRESSION TAB -->
+        <section class="tab-panel" id="tab-progression">
+          <div class="results-heading">
+            <div><p class="eyebrow">LEVEL UP WITH PURPOSE</p><h2>Your next <em>progression.</em></h2><p class="muted-copy">Find a shortest path from a beginner-friendly starting move to your target exercise.</p></div>
+            <span class="result-count">EXERCISE PATH</span>
+          </div>
+          <div class="progression-controls">
+            <label for="target-exercise">Choose a target exercise</label>
+            <input id="target-exercise" list="progression-options" placeholder="Search an exercise…" autocomplete="off">
+            <datalist id="progression-options"><option value="Loading exercises…"></datalist>
+            <button class="discover-button progression-button" id="find-progression-button" type="button">Find progression <span>→</span></button>
+            <span class="control-help">Search by name, then press Find progression. No Profile is needed.</span>
+          </div>
+          <div class="progression-note" id="progression-note">Choose any target exercise to see its progression path. This feature works without a saved Profile.</div>
+          <div class="progression-track" id="progression-track"><div class="empty-state slim"><span class="empty-icon">↗</span><h3>Explore exercise progression</h3><p>Select a target exercise and press Find progression. You do not need to set up a Profile.</p></div></div>
+</section>
+
+        <!-- WEEKLY PLAN TAB -->
+        <section class="tab-panel" id="tab-schedule">
+          <div class="results-heading">
+            <div><p class="eyebrow">A WEEK THAT MAKES SENSE</p><h2>Your training <em>week.</em></h2><p class="muted-copy">A time-aware selection designed to cover multiple training groups.</p></div>
+            <span class="result-count">WEEKLY PLAN</span>
+          </div>
+          <div class="plan-options">
+            <label class="stretch-toggle schedule-stretch-toggle"><input type="checkbox" id="include-stretch" checked><span class="switch"></span><span><strong>Suggest warm-up and cool-down</strong><small>One warm-up and one cool-down where available. Not counted in your session time.</small></span></label>
+            <p class="plan-mobility-note" id="plan-mobility-note">Hip mobility is controlled from your Profile settings.</p>
+          </div>
+          <div class="schedule-summary" id="schedule-summary">
+            <div><span class="summary-number" id="schedule-days">—</span><span>training days</span></div>
+            <div><span class="summary-number" id="schedule-exercises">—</span><span>exercises selected</span></div>
+            <div><span class="summary-number" id="schedule-minutes">—</span><span>planned minutes</span></div>
+          </div>
+          <div class="schedule-list" id="schedule-list"><div class="empty-state"><span class="empty-icon">▦</span><h3>Your weekly plan is waiting</h3><p>Save your profile and press Discover to generate your training days.</p></div></div>
+</section>
+      </section>
+    </div>
+
+    <footer class="app-footer"><span>Fit<span>EZ</span> © 2026</span><span>Personalised exercise suggestions · Not medical advice </span></footer>
+  </main>
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
